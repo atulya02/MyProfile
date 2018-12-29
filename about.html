@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	<style type="text/css">
+		*, *:before, *:after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+body {
+  background: #fff;
+  font-family: 'Montserrat', sans-serif;
+}
+.skw-pages {
+  overflow: hidden;
+  position: relative;
+  height: 100vh;
+}
+.skw-page {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+.skw-page__half {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100vh;
+  transition: transform 1s;
+}
+.skw-page__half--left {
+  left: 0;
+  transform: translate3d(-32.4vh, 100%, 0);
+}
+.skw-page__half--right {
+  left: 50%;
+  transform: translate3d(32.4vh, -100%, 0);
+}
+.skw-page.active .skw-page__half {
+  transform: translate3d(0, 0, 0);
+}
+.skw-page__skewed {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 150%;
+  height: 100%;
+  transform: skewX(0);
+  background: #000;
+}
+.skw-page__half--left .skw-page__skewed {
+  left: ;
+}
+.skw-page__half--right .skw-page__skewed {
+  right: ;
+}
+.skw-page__content {
+  display: flex;
+  align-items: ;
+  justify-content: center;
+  flex-flow: column wrap;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0 ;
+  color: #000;
+  transform: skewX(0);
+  transition: transform 1s, opacity 1s;
+  background-repeat: no-repeat;
+ 
+}
+.skw-page__half--left .skw-page__content {
+  padding-left: ;
+  padding-right:;
+  transform-origin: 100% 0;
+  padding: 5px;
+}
+.skw-page__half--right .skw-page__content {
+  
+  transform-origin: 0 100%;
+}
+.skw-page.inactive .skw-page__content {
+  opacity: 0.5;
+  transform: skewX(0deg) scale(4);
+}
+.skw-page__heading {
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 32px;
+  text-align: center;
+}
+.skw-page__description {
+  font-size: 18px;
+  text-align: left;
+  line-height: 50px;
+}
+.skw-page__link {
+  color: #ffa0a0;
+}
+p{
+  margin-left: 150px;
+  margin-bottom: 10px;
+  width: 40%;
+}
+.skw-page-1 .skw-page__half--left .skw-page__content {
+
+}
+.skw-page-1 .skw-page__half--right .skw-page__content {
+  background: #fff;
+}
+.skw-page-2 .skw-page__half--left .skw-page__content {
+  background: #fff;
+}
+.skw-page-2 .skw-page__half--right .skw-page__content {
+  background-image: url('profile.jpg');
+}
+.skw-page-3 .skw-page__half--left .skw-page__content {
+  background-image: url('profile_2.jpg');
+}
+.skw-page-3 .skw-page__half--right .skw-page__content {
+  background: #fff;
+}
+.skw-page-4 .skw-page__half--left .skw-page__content {
+  background: #fff;
+}
+.skw-page-4 .skw-page__half--right .skw-page__content {
+  background-image: url('profile.jpg');
+}
+
+
+
+
+
+
+/*------------*/
+body {
+  
+  --translate-x: 30px;
+  --translate-y: -20px;
+}
+.portrait {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.portrait:hover .hover {
+  opacity: 1;
+}
+.portrait:hover .cover-img {
+  opacity: 0;
+}
+.portrait:hover .hover-img {
+  transform: translate(var(--translate-x), var(--translate-y));
+  opacity: 1;
+}
+.fill {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+.z-10 {
+  z-index: 10;
+}
+.hover {
+  transition: all 380ms cubic-bezier(0.16, 0.01, 0.77, 1);
+  opacity: 0;
+}
+.hover-img {
+  transition: transform 320ms cubic-bezier(0.16, 0.01, 0.77, 1);
+}
+.hover-img:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  background-color: transparent;
+  mix-blend-mode: color;
+  opacity: 0;
+}
+.cover-img {
+  background-size: cover;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-image: url(profile_2.jpg);
+  position: absolute;
+ top: 0px;
+ left: -75px;
+ 
+}
+
+.back-button {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: #03a9f4 1px solid;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+.back-button.back .arrow-wrap {
+  left: -50%;
+}
+.back-button:hover {
+  background: #03a9f4;
+}
+.back-button:hover .arrow-wrap span {
+  background: #fff;
+}
+.back-button .arrow-wrap {
+  display: block;
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease;
+}
+.back-button .arrow-wrap span {
+  height: 1px;
+  left: 0;
+  top: 50%;
+  background: #03a9f4;
+  position: absolute;
+  display: block;
+  transition: background 0.3s ease;
+}
+.back-button .arrow-wrap .arrow-part-1 {
+  width: 100%;
+  transform: translate(0, -50%);
+}
+.back-button .arrow-wrap .arrow-part-2 {
+  width: 60%;
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+}
+.back-button .arrow-wrap .arrow-part-3 {
+  width: 60%;
+  transform: rotate(45deg);
+  transform-origin: 0 0;
+}
+
+	</style>
+</head>
+<body>
+	<a href="index.html">
+<div class="back-button" style="z-index: 5">
+  <div class="arrow-wrap">
+    <span class="arrow-part-1"></span>
+    <span class="arrow-part-2"></span>
+    <span class="arrow-part-3"></span>
+  </div>
+</div>
+</a>
+
+	<div class="skw-pages">
+  <div class="skw-page skw-page-1 active">
+    <div class="skw-page__half skw-page__half--left">
+      <div class="skw-page__skewed">
+        <div class="skw-page__content">
+               <div class="portrait" id="portrait">
+                 <div class="fill cover-img"></div>
+                 <div class="fill z-10 hover">
+                    <div class="fill cover-img hover-img"></div>
+                 </div>
+              </div>
+        </div>
+      </div>
+    </div>
+    <div class="skw-page__half skw-page__half--right">
+      <div class="skw-page__skewed">
+        <div class="skw-page__content" style="font-family: 'Montserrat', sans-serif;">
+          
+          <p class="skw-page__description">I am a coder,web developer,web designer,app developer,machine learning and deep learning enthusiast and what not.
+            <br><br>
+        I turn coffee into <code>CODE.</code>
+            <br><br>
+        I am currently taking my undergraduate course at MANIT,Bhopal,INDIA.
+
+        I contribute to the society through my codepens,github.Scroll,to find out more about my skills.</p>
+        <p>Download my <a href="">resume.</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="skw-page skw-page-2">
+    <div class="skw-page__half skw-page__half--left">
+      <div class="skw-page__skewed">
+        <div class="skw-page__content">
+          <h2 class="skw-page__heading">Statistics</h2>
+          <p class="skw-page__description">
+
+<div class="skills-wrapper">
+
+  <div class="bar html" style="width: 100%">
+  
+    <span>HTML5</span>
+    
+  </div>
+  
+  <div class="bar css" style="width: 100%">
+  
+    <span>CSS3</span>
+    
+  </div>
+  
+  <div class="bar js" style="width: 85%">
+  
+    <span>JavaScript</span>
+    
+  </div>
+ 
+  <div class="bar juggling" style="width: 50%">
+  
+    <span>Juggling</span>
+    
+  </div>
+  
+</div>
+
+</p>
+        </div>
+      </div>
+    </div>
+    <div class="skw-page__half skw-page__half--right">
+      <div class="skw-page__skewed">
+        <div class="skw-page__content">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>
+<script type="text/javascript">
+	(function($){
+
+	/**
+	 * Copyright 2012, Digital Fusion
+	 * Licensed under the MIT license.
+	 * http://teamdf.com/jquery-plugins/license/
+	 *
+	 * @author Sam Sehnert
+	 * @desc A small plugin that checks whether elements are within
+	 *		 the user visible viewport of a web browser.
+	 *		 only accounts for vertical position, not horizontal.
+	 */
+	$.fn.visible = function(partial){
+
+	    var $t				= $(this),
+	    	$w				= $(window),
+	    	viewTop			= $w.scrollTop(),
+	    	viewBottom		= viewTop + $w.height(),
+	    	_top			= $t.offset().top,
+	    	_bottom			= _top + $t.height(),
+	    	compareTop		= partial === true ? _bottom : _top,
+	    	compareBottom	= partial === true ? _top : _bottom;
+
+		return ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+    };
+    
+})(jQuery);
+
+$(window).scroll(function(){
+  if( $('.skills-wrapper').visible(true) ) {
+    $('.skills-wrapper').addClass('enabled');
+  }
+  //else {
+  //  $('.skills-wrapper').removeClass('enabled');
+  //}
+});
+</script>
+
+<script type="text/javascript">
+  var root = document.getElementById('portrait');
+
+var mouse_monitor = function(e) {
+   let x = e.clientX/innerWidth;
+   let y = e.clientY/innerHeight;
+   
+   let move_x = (x>0.5) ? '-30px' : '30px';
+   let move_y = (y>0.5) ? '-30px' : '30px';
+   
+   root.style.setProperty("--translate-x", move_x);
+   root.style.setProperty("--translate-y", move_y);
+}
+
+  root.addEventListener("mousemove", mouse_monitor);
+</script>
+<script type="text/javascript">
+	var backButton = document.querySelector('.back-button')
+
+function backAnim(){  
+  if (backButton.classList.contains('back')){
+    backButton.classList.remove('back');
+  }
+  else{
+    backButton.classList.add('back');
+    setTimeout(backAnim, 1000);  
+  }
+}
+backButton.addEventListener('click', backAnim); 
+
+ 
+</script>
+<script type="text/javascript">
+	var backButton = document.querySelector('.back-button')
+
+function backAnim(){  
+  if (backButton.classList.contains('back')){
+    backButton.classList.remove('back');
+  }
+  else{
+    backButton.classList.add('back');
+    setTimeout(backAnim, 1000);  
+  }
+}
+backButton.addEventListener('click', backAnim); 
+
+ 
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+  var curPage = 1;
+  var numOfPages = $(".skw-page").length;
+  var animTime = 1000;
+  var scrolling = false;
+  var pgPrefix = ".skw-page-";
+
+  function pagination() {
+    scrolling = true;
+
+    $(pgPrefix + curPage).removeClass("inactive").addClass("active");
+    $(pgPrefix + (curPage - 1)).addClass("inactive");
+    $(pgPrefix + (curPage + 1)).removeClass("active");
+
+    setTimeout(function() {
+      scrolling = false;
+    }, animTime);
+  };
+
+  function navigateUp() {
+    if (curPage === 1) return;
+    curPage--;
+    pagination();
+  };
+
+  function navigateDown() {
+    if (curPage === numOfPages) return;
+    curPage++;
+    pagination();
+  };
+
+  $(document).on("mousewheel DOMMouseScroll", function(e) {
+    if (scrolling) return;
+    if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+      navigateUp();
+    } else { 
+      navigateDown();
+    }
+  });
+
+  $(document).on("keydown", function(e) {
+    if (scrolling) return;
+    if (e.which === 38) {
+      navigateUp();
+    } else if (e.which === 40) {
+      navigateDown();
+    }
+  });
+
+});
+</script>
+</body>
+</html>

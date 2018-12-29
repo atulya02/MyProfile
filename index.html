@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Atulya Raj</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+  		<style>
+			body {
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+				font-family:Monospace;
+				font-size:13px;
+				text-align:center;
+				font-weight: bold;
+				text-align:center;
+			}
+			.col-lg-1,{
+				color: #fff;
+			}
+			
+			/*......svg settings....*/
+
+
+
+
+
+i.material-icons {
+		font-size: 1.5rem;
+		color: white;
+		position: relative;
+		border-radius: 50%;
+		padding: 5px;
+		margin: 3px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+		transition: color 0.2s ease, background-color 0.2s ease, transform 0.3s ease;
+}
+
+i.material-icons:after {
+		content: "";
+		width: 100%;
+		height: 100%;
+		border: solid 2px;
+		transform: scale(0.8);
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		border-radius: 50%;
+		transition: all 0.5s ease;
+}
+
+i.material-icons:hover:after {
+		transform: scale(1);
+		box-shadow: 10px 0 20px rgba(0, 0, 0, 0.19), 6px 0 6px rgba(0, 0, 0, 0.23);
+}
+
+
+i.material-icons {
+		background-color: #000;
+}
+
+i.material-icons:hover {
+		color: gray;
+}
+
+i.material-icons:after {
+		border-color: gray;
+}
+
+
+i.material-icons:hover {
+		background-color: transparent;
+		transform: rotate(90deg);
+		cursor: pointer;
+		box-shadow: none;
+}
+/*...projects...*/
+
+
+
+* {box-sizing: border-box;max-width: 100%;font-family: 'Gruppo', cursive;}
+
+.menu-icon {width: 50px;height: 50px;position: fixed;top: 0;left: 0;margin: 10px 15px;transform:scale(0.8);padding: 0;cursor: pointer;z-index:20}
+
+.menu {width: 100%;height: 100%;display: -webkit-flex;display: flex;-webkit-flex-wrap: wrap;flex-wrap: wrap;}
+.menu-con {-webkit-flex-grow: 1;flex-basis: 0;flex-grow: 1;display: -webkit-flex;display: flex;-webkit-justify-content:space-around;position:relative;top:-1000px;transition:all 0.5s}
+.menu-con p:before {content: ""; display: block;position:absolute;top:0;left:0;z-index:1;width:100%;height: 100%;opacity: 1;background: rgba(0,0,0,0);-webkit-transition: all 0.5s;transition: all 0.5s;}
+.menu-con:hover p:before {background: rgba(0,0,0,0.2)}
+.menu-con p {height:20px;-webkit-align-self:center;color:white;font-size:25px;z-index:2;cursor:pointer}
+@media screen and (max-width: 600px) {.menu-con {min-width:50%}}
+@media screen and (max-width: 350px) {.menu-con {min-width:100%}}
+  
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid">
+
+			
+			<div style="position: absolute;top: 0;right: 0;color: #fff"><a href="project.html"><i class="material-icons">lightbulb_outline</i></a></div>
+			<div style="position: absolute;bottom: 0;left: 0;color: #fff"><a href="about.html"><i class="material-icons">tag_faces</i></a></div>
+			<div class="menu-icon" onclick="this.classList.toggle('hover');Drop(0)">
+	<i class="material-icons">visibility</i>
+</div>
+<div class="menu">
+	<div class="menu-con" style="background:#000;height: 100%;"><a href="index.html" style="text-decoration: none;"><p>THEME 1</p></a></div>
+  <div class="menu-con" style="background:rgb(160,160,170);"><a href="index1.html" style="text-decoration: none;"><p>THEME 2</p></a></div>  
+  <div class="menu-con" style="background:mediumseagreen;"><a href="index2.html" style="text-decoration: none;"><p>THEME 3</p></a></div> 
+  <div class="menu-con" style="background:teal;"><a href="index3.html" style="text-decoration: none;"><p>THEME 4</p></a></div> 
+  <div class="menu-con" style="background:IndianRed;"><a href="index4.html" style="text-decoration: none;"><p>THEME 5</p></a></div>
+</div>
+			<div style="position: absolute;bottom:0;right:0;color: #fff"><a href="contact.html"><i class="material-icons">headset_mic</i></a></div>
+		<div  class="row" style="position: absolute;top:80%">
+
+		<script src="three.js"></script>
+
+		<script src="WebGL.js"></script>
+		<script src="stats.min.js"></script>
+
+		<script type="x-shader/x-vertex" id="vertexshader">
+
+			attribute float scale;
+
+			void main() {
+
+				vec4 mvPosition = modelViewMatrix * vec4( position, 2.0 );
+
+				gl_PointSize = scale * ( 400.0 / - mvPosition.z );
+
+				gl_Position = projectionMatrix * mvPosition;
+
+			}
+
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentshader">
+
+			uniform vec3 color;
+
+			void main() {
+
+				if ( length( gl_PointCoord - vec2( 0.5, 0.5 ) ) > 0.475 ) discard;
+
+				gl_FragColor = vec4( color, 1.0 );
+
+			}
+
+		</script>
+
+		<script>
+
+			if ( WEBGL.isWebGLAvailable() === false ) {
+
+				document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+
+			}
+
+			var SEPARATION = 100, AMOUNTX = 100, AMOUNTY = 50;
+
+			var container, stats;
+			var camera, scene, renderer;
+
+			var particles, count = 0;
+
+			var mouseX = 0, mouseY = 0;
+
+			var windowHalfX = window.innerWidth / 2;
+			var windowHalfY = window.innerHeight / 2;
+
+			init();
+			animate();
+
+			function init() {
+
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+
+				camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 180, 10000 );
+				camera.position.z = 1000;
+
+				scene = new THREE.Scene();
+
+				//
+
+				var numParticles = AMOUNTX * AMOUNTY;
+
+				var positions = new Float32Array( numParticles * 3 );
+				var scales = new Float32Array( numParticles );
+
+				var i = 0, j = 0;
+
+				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+						positions[ i ] = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 ); // x
+						positions[ i + 1 ] = 0; // y
+						positions[ i + 2 ] = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 ); // z
+
+						scales[ j ] = 1;
+
+						i += 3;
+						j ++;
+
+					}
+
+				}
+
+				var geometry = new THREE.BufferGeometry();
+				geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+				geometry.addAttribute( 'scale', new THREE.BufferAttribute( scales, 1 ) );
+
+				var material = new THREE.ShaderMaterial( {
+
+					uniforms: {
+						color: { value: new THREE.Color( 0xffffff ) },
+
+					},
+					vertexShader: document.getElementById( 'vertexshader' ).textContent,
+					fragmentShader: document.getElementById( 'fragmentshader' ).textContent
+
+				} );
+
+				//
+
+				particles = new THREE.Points( geometry, material );
+				scene.add( particles );
+
+				//
+
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				container.appendChild( renderer.domElement );
+
+				
+
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+				document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+				//
+
+				window.addEventListener( 'resize', onWindowResize, false );
+
+			}
+
+			function onWindowResize() {
+
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+			}
+
+			//
+
+			function onDocumentMouseMove( event ) {
+
+				mouseX = event.clientX - windowHalfX;
+				mouseY = event.clientY - windowHalfY;
+
+			}
+
+			function onDocumentTouchStart( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			function onDocumentTouchMove( event ) {
+
+				if ( event.touches.length === 1 ) {
+
+					event.preventDefault();
+
+					mouseX = event.touches[ 0 ].pageX - windowHalfX;
+					mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+				}
+
+			}
+
+			//
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				render();
+				
+
+			}
+
+			function render() {
+
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( - mouseY - camera.position.y ) * .05;
+				camera.lookAt( scene.position );
+
+				var positions = particles.geometry.attributes.position.array;
+				var scales = particles.geometry.attributes.scale.array;
+
+				var i = 0, j = 0;
+
+				for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+					for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+						positions[ i + 1 ] = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
+										( Math.sin( ( iy + count ) * 0.5 ) * 50 );
+
+						scales[ j ] = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 8 +
+										( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 8;
+
+						i += 3;
+						j ++;
+
+					}
+
+				}
+
+				particles.geometry.attributes.position.needsUpdate = true;
+				particles.geometry.attributes.scale.needsUpdate = true;
+
+				renderer.render( scene, camera );
+
+				count += 0.1;
+
+			}
+
+		</script>
+	</div>
+</div>
+
+<script type="text/javascript">
+  	var open = false;
+
+function Drop(n) {
+	var i;
+	if (open == false) {
+		for (i = n; i < 5; i++) {
+			Drp(i)
+		}
+		open = true;
+	} else if (open == true) {
+		for (i = n; i < 5; i++) {
+			Cls(i)
+		}
+		open = false;
+	}
+}
+
+function Drp(n) {
+	var elem = document.getElementsByClassName("menu-con")[n];
+	var pos = -1 * window.innerHeight - n * 100;
+	var id = setInterval(frame, 5);
+
+	function frame() {
+		if (pos >= -10) {
+			clearInterval(id);
+			elem.style.top = 0 + 'px';
+		} else {
+			pos += 10;
+			elem.style.top = pos + 'px';
+		}
+	}
+}
+
+function Cls(n) {
+	var elems = document.getElementsByClassName("menu-con")[n];
+	var poss = 0;
+	var ids = setInterval(frames, 5);
+
+	function frames() {
+		if (poss <= -1 * window.innerHeight) {
+			clearInterval(ids);
+			elems.style.top = -1 * window.innerHeight + 'px';
+		} else {
+			poss += -7 - n * 2;
+			elems.style.top = poss + 'px';
+		}
+	}
+}
+  </script>
+
+	</body>
+</html>

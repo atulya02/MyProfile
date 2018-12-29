@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.21/Tone.min.js"></script>
+<style type="text/css">
+	body{
+  background-color:#85CF9A;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:'Roboto Condensed', sans-serif;
+}
+
+
+#kalimba {
+  display: flex;
+  justify-content: space-around;
+  height: 400px;
+  width: 300px;
+  background-color: #49d8a4;
+  border-radius: 20px;
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  box-shadow:
+    10px 10px 25px #000,
+    inset 5px 5px 10px rgba(255, 255, 255, 0.4),
+    inset -5px -5px 10px rgba(0, 0, 0, 0.4);
+}
+#hole {
+  position: absolute;
+  bottom: 100px;
+  left: 112px;
+  width: 75px;
+  height: 75px;
+  background-color: #076;
+  border-radius: 50%;
+  box-shadow: inset 10px 10px 25px #000;
+}
+.key {
+  margin-top: 20px;
+  width: 12px;
+  height: 100px;
+  border-radius: 5px;
+  background-color: #f25c5c;
+  /*background-color: #f4667c;*/
+  box-shadow: 5px 5px 20px #000;
+  z-index: 10;
+}
+.key:first-child {
+  margin-left: 15px;
+}
+.key.last-key {
+  margin-right: 15px;
+}
+.key-1 {
+  height: 200px;
+}
+.key-2 {
+  height: 190px;
+}
+.key-3 {
+  height: 180px;
+}
+.key-4 {
+  height: 170px;
+}
+.key-5 {
+  height: 160px;
+}
+.key-6 {
+  height: 150px;
+}
+.key-7 {
+  height: 140px;
+}
+.key-8 {
+  height: 130px;
+}
+.key-9 {
+  height: 120px;
+}
+.key-10 {
+  height: 110px;
+}
+.key-11 {
+  height: 100px;
+}
+
+.pad {
+  position: absolute;  
+  width: 280px;
+  background-color: #19564c;
+}
+.top-pad {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  top: 50px;
+  border-radius: 7px;
+  height: 30px;
+  box-shadow:
+    5px 5px 25px #000,
+    inset 5px 5px 25px rgba(255, 255, 255, 0.5),
+    inset -5px -5px 25px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+}
+.bottom-pad {
+  top: 30px;
+  height: 15px;
+  border-radius: 5px;
+  box-shadow:
+    2px 2px 5px #000,
+    inset 5px 5px 15px rgba(255, 255, 255, 0.3),
+    inset -5px -5px 15px rgba(0, 0, 0, 0.3);
+}
+.bottom-pad.last-pad {
+  top: 90px;
+}
+.screw {
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: silver;
+    box-shadow:
+    2px 2px 3px #000,
+    inset 2px 2px 2px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 2px rgba(0, 0, 0, 0.3);
+}
+.screw:first-child {
+  margin-left: -30px;
+}
+.screw:last-child {
+  margin-right: -30px;
+}
+
+@keyframes shine {
+  0% {
+    background-color: rgba(255, 232, 107, 1);
+  }
+  /*
+  15% {
+    box-shadow:
+      0 0 25px 5px rgba(255, 232, 107, 1),
+      5px 5px 20px #000;
+  }
+  100% {
+    box-shadow:
+      0 0 50px 15px rgba(255, 255, 0, 0),
+      5px 5px 20px #000;
+  }
+  */
+}
+
+.key:hover {
+  animation: shine 1s;
+  
+}
+.back-button {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: #03a9f4 1px solid;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+.back-button.back .arrow-wrap {
+  left: -50%;
+}
+.back-button:hover {
+  background: #03a9f4;
+}
+.back-button:hover .arrow-wrap span {
+  background: #fff;
+}
+.back-button .arrow-wrap {
+  display: block;
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease;
+}
+.back-button .arrow-wrap span {
+  height: 1px;
+  left: 0;
+  top: 50%;
+  background: #03a9f4;
+  position: absolute;
+  display: block;
+  transition: background 0.3s ease;
+}
+.back-button .arrow-wrap .arrow-part-1 {
+  width: 100%;
+  transform: translate(0, -50%);
+}
+.back-button .arrow-wrap .arrow-part-2 {
+  width: 60%;
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+}
+.back-button .arrow-wrap .arrow-part-3 {
+  width: 60%;
+  transform: rotate(45deg);
+  transform-origin: 0 0;
+}
+
+/*...............form...........*/
+// Grid
+body {
+  background: #efefef;
+  font-size: 62.5%;
+  font-family: 'Lato', sans-serif;
+  font-weight: ;
+  color: #b6b6b6;
+}
+body section {
+  background: white;
+  margin: 60px auto 120px;
+  border-top: 15px solid #313a3d;
+  text-align: center;
+  padding: 50px 0 110px;
+  width: 80%;
+  max-width: 600px;
+  position: absolute;
+  left: 50%;
+}
+body section h1 {
+  margin-bottom: 40px;
+  font-size: 40px;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  font-weight: 100;
+}
+form {
+  width: 58.33333%;
+  margin: 0 auto;
+}
+form .field {
+  width: 100%;
+  position: relative;
+  margin-bottom: 15px;
+}
+form .field label {
+  text-transform: uppercase;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #313a3d;
+  width: 100%;
+  padding: 18px 0;
+  font-size: 16px;
+  letter-spacing: 0.075em;
+  -webkit-transition: all 333ms ease-in-out;
+  -moz-transition: all 333ms ease-in-out;
+  -o-transition: all 333ms ease-in-out;
+  -ms-transition: all 333ms ease-in-out;
+  transition: all 333ms ease-in-out;
+}
+form .field label + span {
+  font-family: 'SSStandard';
+  opacity: 0;
+  color: white;
+  display: block;
+  position: absolute;
+  top: 12px;
+  left: 7%;
+  font-size: 2.5em;
+  text-shadow: 1px 2px 0 #cd6302;
+  -webkit-transition: all 333ms ease-in-out;
+  -moz-transition: all 333ms ease-in-out;
+  -o-transition: all 333ms ease-in-out;
+  -ms-transition: all 333ms ease-in-out;
+  transition: all 333ms ease-in-out;
+}
+form .field input[type="text"], form .field textarea {
+  border: none;
+  background: #e8e9ea;
+  width: 80.5%;
+  margin: 0;
+  padding: 18px 0;
+  padding-left: 19.5%;
+  color: #313a3d;
+  font-size: 1.4em;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+form .field input[type="text"]#msg, form .field textarea#msg {
+  height: 18px;
+  resize: none;
+  -webkit-transition: all 333ms ease-in-out;
+  -moz-transition: all 333ms ease-in-out;
+  -o-transition: all 333ms ease-in-out;
+  -ms-transition: all 333ms ease-in-out;
+  transition: all 333ms ease-in-out;
+}
+form .field input[type="text"]:focus, form .field textarea:focus, form .field input[type="text"].focused, form .field textarea.focused {
+  outline: none;
+}
+form .field input[type="text"]:focus#msg, form .field textarea:focus#msg, form .field input[type="text"].focused#msg, form .field textarea.focused#msg {
+  padding-bottom: 150px;
+}
+form .field input[type="text"]:focus + label, form .field textarea:focus + label, form .field input[type="text"].focused + label, form .field textarea.focused + label {
+  width: 18%;
+  background: #fd9638;
+  color: #313a3d;
+}
+form .field input[type="text"].focused + label, form .field textarea.focused + label {
+  color: #fd9638;
+}
+form .field:hover label {
+  width: 18%;
+  background: #313a3d;
+  color: white;
+}
+form input[type="submit"] {
+  background: #fd9638;
+  color: white;
+  -webkit-appearance: none;
+  border: none;
+  text-transform: uppercase;
+  position: relative;
+  padding: 13px 50px;
+  font-size: 1.4em;
+  letter-spacing: 0.1em;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  -webkit-transition: all 333ms ease-in-out;
+  -moz-transition: all 333ms ease-in-out;
+  -o-transition: all 333ms ease-in-out;
+  -ms-transition: all 333ms ease-in-out;
+  transition: all 333ms ease-in-out;
+}
+form input[type="submit"]:hover {
+  background: #313a3d;
+  color: #fd9638;
+}
+form input[type="submit"]:focus {
+  outline: none;
+  background: #cd6302;
+}
+
+</style>
+</head>
+<body>
+	<a href="index.html">
+<div class="back-button" style="z-index: 5">
+  <div class="arrow-wrap">
+    <span class="arrow-part-1"></span>
+    <span class="arrow-part-2"></span>
+    <span class="arrow-part-3"></span>
+  </div>
+</div>
+</a>
+<div id="kalimba">
+  <div class="key key-10" data-note="E5"></div>
+  <div class="key key-8" data-note="C5"></div>
+  <div class="key key-6" data-note="A4"></div>
+  <div class="key key-4" data-note="F4"></div>
+  <div class="key key-2" data-note="D4"></div>
+  <div class="key key-1" data-note="C4"></div>
+  <div class="key key-3" data-note="E4"></div>
+  <div class="key key-5" data-note="G4"></div>
+  <div class="key key-7" data-note="B4"></div>
+  <div class="key key-9" data-note="D5"></div>
+  <div class="key last-key key-11" data-note="F5"></div>
+  <div class="pad bottom-pad"></div>
+  <div class="pad top-pad">
+    <div class="screw"></div>
+    <div class="screw"></div>
+  </div>
+  <div class="pad bottom-pad last-pad"></div>
+  <div id="hole"></div>
+</div>
+	<section id="hire">
+    <h1>Contact Me</h1>
+    
+    <form>
+	      <div class="field name-box">
+		        <input type="text" id="name" placeholder="Who Are You?"/>
+        		<label for="name">Name</label>
+		        <span class="ss-icon">check</span>
+	      </div>
+
+	      <div class="field email-box">
+		        <input type="text" id="email" placeholder="name@email.com"/>
+		        <label for="email">Email</label>
+		        <span class="ss-icon">check</span>
+	      </div>
+
+	      <div class="field msg-box">
+		        <textarea id="msg" rows="4" placeholder="Your message goes here..."/></textarea>
+		        <label for="msg">Msg</label>
+		        <span class="ss-icon">check</span>
+	      </div>
+
+	      <input class="button" type="submit" value="Send" />
+  </form>
+</section>
+<script type="text/javascript">
+	var backButton = document.querySelector('.back-button')
+
+function backAnim(){  
+  if (backButton.classList.contains('back')){
+    backButton.classList.remove('back');
+  }
+  else{
+    backButton.classList.add('back');
+    setTimeout(backAnim, 1000);  
+  }
+}
+backButton.addEventListener('click', backAnim); 
+
+ 
+</script>
+
+<script type="text/javascript">
+	/* Initial attempt to use physical modelling. Just scroll down. */
+
+// const NOISE_FACTOR = 0.05;
+// const BUFFER_SIZE = 2048;
+
+// const wave = new Array(64).fill(0).map((x, i) => 1 - Math.max(i/40, 1));
+// const sp = new Array(64).fill(0);
+// //sp[0] = -0.5;
+
+// const genSound = function() {
+//   /*
+//   const newSample = (wave[0]*0.9 + wave[1]*0.1)/1.0100;
+//   wave.shift();
+//   wave.push(newSample);
+//   */
+  
+  
+//   for (let i = 0, l=sp.length; i<l; i++) {
+//     sp[i] = ((wave[i-1]||wave[i]) + (wave[i+1]||0) - 2*wave[i]) * 0.8 + sp[i]*0.99995;
+//   }
+//   sp[sp.length-1] *= 0.9;
+  
+//   sp[42] += (0 - wave[42]) * 0.5;
+//   sp[41] += (0 - wave[41]) * 0.5;
+//   sp[40] += (0 - wave[40]) * 0.5;
+  
+//   for (let i = 0, l=wave.length; i<l; i++) {
+//     wave[i] = sp[i]*1 + wave[i];  
+//   }
+//   if (Math.random() < 0.0001) console.log(wave[0]);
+//     return [
+//       wave[0],
+//       wave[0]
+//     ];
+// };
+
+// const actx = new AudioContext();
+
+
+//   var source = actx.createBufferSource();
+  
+//   // Hook it up to a ScriptProcessorNode.
+//   var processor = actx.createScriptProcessor(BUFFER_SIZE);
+//   processor.onaudioprocess = function(e) {
+//   var leftIn = e.inputBuffer.getChannelData(0);
+//   var rightIn = e.inputBuffer.getChannelData(1);
+//   var leftOut = e.outputBuffer.getChannelData(0);
+//   var rightOut = e.outputBuffer.getChannelData(1);
+
+//   for (var i = 0; i < leftIn.length; i++) {
+//     //genSound();
+//     [leftOut[i], rightOut[i]] = genSound();
+//   }
+// };
+
+
+// source.connect(processor);
+// processor.connect(actx.destination);
+
+//   source[source.start ? 'start': 'noteOn'](0);
+
+// kalimba preset from https://www.guitarland.com/MusicTheoryWithToneJS/Presets-gh-pages/ with sustain removed
+const synth = new Tone.PolySynth(11, Tone.FMSynth, {
+    "harmonicity":8,
+    "modulationIndex": 2,
+    "oscillator" : {
+        "type": "sine"
+    },
+    "envelope": {
+        "attack": 0.001,
+        "decay": 2,
+        "sustain": 0,
+        "release": 2
+    },
+    "modulation" : {
+        "type" : "square"
+    },
+    "modulationEnvelope" : {
+        "attack": 0.002,
+        "decay": 0.2,
+        "sustain": 0,
+        "release": 0.2
+    }
+}).toMaster();
+
+//attach a listener to all of the buttons
+document.querySelectorAll('.key').forEach((key) => {
+	key.addEventListener('mouseover', function(e){
+		//play the note on mouse over
+		synth.triggerAttack(e.target.dataset.note);
+	});
+	key.addEventListener('mouseleave', function(e){
+		//release on mouseleave
+		synth.triggerRelease(e.target.dataset.note);
+	});
+})
+</script>
+<script type="text/javascript">
+	// Input Lock
+$('textarea').blur(function () {
+    $('#hire textarea').each(function () {
+        $this = $(this);
+        if ( this.value != '' ) {
+          $this.addClass('focused');
+          $('textarea + label + span').css({'opacity': 1});
+        }
+        else {
+          $this.removeClass('focused');
+          $('textarea + label + span').css({'opacity': 0});
+        }
+    });
+});
+
+$('#hire .field:first-child input').blur(function () {
+    $('#hire .field:first-child input').each(function () {
+        $this = $(this);
+        if ( this.value != '' ) {
+          $this.addClass('focused');
+          $('.field:first-child input + label + span').css({'opacity': 1});
+        }
+        else {
+          $this.removeClass('focused');
+          $('.field:first-child input + label + span').css({'opacity': 0});
+        }
+    });
+});
+
+$('#hire .field:nth-child(2) input').blur(function () {
+    $('#hire .field:nth-child(2) input').each(function () {
+        $this = $(this);
+        if ( this.value != '' ) {
+          $this.addClass('focused');
+          $('.field:nth-child(2) input + label + span').css({'opacity': 1});
+        }
+        else {
+          $this.removeClass('focused');
+          $('.field:nth-child(2) input + label + span').css({'opacity': 0});
+        }
+    });
+});
+</script>
+</body>
+</html>
