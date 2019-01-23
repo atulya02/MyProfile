@@ -103,7 +103,7 @@ body {
   color: #ffa0a0;
 }
 .skw-page-1 .skw-page__half--left .skw-page__content {
-  background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/mousover-img-1.jpg');
+  background-image: url('abcd.jpg');
 }
 .skw-page-1 .skw-page__half--right .skw-page__content {
   background: #292929;
@@ -132,10 +132,72 @@ body {
 .skw-page-5 .skw-page__half--right .skw-page__content {
   background: #292929;
 }
-
+.back-button {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: #03a9f4 1px solid;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+.back-button.back .arrow-wrap {
+  left: -50%;
+}
+.back-button:hover {
+  background: #03a9f4;
+}
+.back-button:hover .arrow-wrap span {
+  background: #fff;
+}
+.back-button .arrow-wrap {
+  display: block;
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: left 0.3s ease;
+}
+.back-button .arrow-wrap span {
+  height: 1px;
+  left: 0;
+  top: 50%;
+  background: #03a9f4;
+  position: absolute;
+  display: block;
+  transition: background 0.3s ease;
+}
+.back-button .arrow-wrap .arrow-part-1 {
+  width: 100%;
+  transform: translate(0, -50%);
+}
+.back-button .arrow-wrap .arrow-part-2 {
+  width: 60%;
+  transform: rotate(-45deg);
+  transform-origin: 0 0;
+}
+.back-button .arrow-wrap .arrow-part-3 {
+  width: 60%;
+  transform: rotate(45deg);
+  transform-origin: 0 0;
+}
 	</style>
 </head>
 <body>
+	<a href="index.html">
+<div class="back-button" style="z-index: 5">
+  <div class="arrow-wrap">
+    <span class="arrow-part-1"></span>
+    <span class="arrow-part-2"></span>
+    <span class="arrow-part-3"></span>
+  </div>
+</div>
+</a>
 
 	<div class="skw-pages">
   <div class="skw-page skw-page-1 active">
@@ -147,8 +209,12 @@ body {
     <div class="skw-page__half skw-page__half--right">
       <div class="skw-page__skewed">
         <div class="skw-page__content">
-          <h2 class="skw-page__heading">PROJECT 1</h2>
-          <p class="skw-page__description">Just scroll down</p>
+          <h2 class="skw-page__heading">NOESIS 5.0</h2>
+          <p class="skw-page__description">This website was built by me for our college'clubs tech festival during DEC'18-JAN'19.Check it out-<a href="https://www.visionmanit.org/" style="">VISION | NOESIS</a>.The source code can be found at my github account.SCROLL DOWN for more</p>
+          <a href="https://github.com/atulya02" aria-label="Homepage" class="footer-octicon" title="GitHub">
+      <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+      </svg>
+  </a>
         </div>
       </div>
     </div>
@@ -157,8 +223,9 @@ body {
     <div class="skw-page__half skw-page__half--left">
       <div class="skw-page__skewed">
         <div class="skw-page__content">
-          <h2 class="skw-page__heading">PROJECT 2</h2>
-          <p class="skw-page__description">Nothing to do here, continue scrolling.</p>
+          <h2 class="skw-page__heading">My Profile</h2>
+          <p class="skw-page__description">The profile,you are viewing.This profile is under construction.Now you know why it looks so odd.However,you can find the source code <a href="https://github.com/atulya02">here</a> .</p>
+          
         </div>
       </div>
     </div>
@@ -177,8 +244,8 @@ body {
     <div class="skw-page__half skw-page__half--right">
       <div class="skw-page__skewed">
         <div class="skw-page__content">
-          <h2 class="skw-page__heading">PROJECT 3</h2>
-          <p class="skw-page__description">The end is near, I promise!</p>
+          <h2 class="skw-page__heading">Dynamic Data Entry app using AngularJS</h2>
+          <p class="skw-page__description">Well ,yes!That's simple.But that's the beginning of something great.</p>
         </div>
       </div>
     </div>
@@ -187,8 +254,8 @@ body {
     <div class="skw-page__half skw-page__half--left">
       <div class="skw-page__skewed">
         <div class="skw-page__content">
-          <h2 class="skw-page__heading">PROJECT 4</h2>
-          <p class="skw-page__description">Ok, ok, just one more scroll!
+          <h2 class="skw-page__heading">Awesome CSS Animations</h2>
+          <p class="skw-page__description">I love to play with CSS.I created a bundle of css animations.Some of them are-<a href="https://booknoesis.netlify.com/">Book Animation</a>,<a href="">Tilted Video</a>,<a href="https://raj2904.netlify.com/">My old Profile</a> and many more.
           <a href="https://github.com" aria-label="Homepage" class="footer-octicon" title="GitHub">
       <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
 </svg>
