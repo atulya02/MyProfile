@@ -1,571 +1,270 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
-	<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.3.21/Tone.min.js"></script>
-<style type="text/css">
-	body{
-  background-color:#85CF9A;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:'Roboto Condensed', sans-serif;
-}
+	<title>Registration Portal</title>
+	<link rel="icon" href="images/favicon.png" type="image/x-icon">
+	<script src="https://www.gstatic.com/firebasejs/5.7.3/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.7.2/firebase-database.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/conversational-form@0.9.90/dist/conversational-form.min.js"></script>
+	<style type="text/css">
+  body{
 
-
-#kalimba {
-  display: flex;
-  justify-content: space-around;
-  height: 400px;
-  width: 300px;
-  background-color: #49d8a4;
-  border-radius: 20px;
-  position: absolute;
-  top: 25%;
-  left: 10%;
-  box-shadow:
-    10px 10px 25px #000,
-    inset 5px 5px 10px rgba(255, 255, 255, 0.4),
-    inset -5px -5px 10px rgba(0, 0, 0, 0.4);
+  }
+	:root {
+  --anim-easeOutBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --cf-anim-time: 0.75s;
+  --cf-breakpoint-1: 769px;
+  --cf-color-green: #1ed97b;
+  --cf-font-weight-bold: 900;
+  --cf-color-black: #222;
+  --cf-color-black-alpha04: rgba(34, 34, 34, 0.4);
+  --cf-color-black-alpha02: rgba(34, 34, 34, 0.2);
+  --cf-color-grey: #ebebeb;
+  --cf-color-white: white;
 }
-#hole {
-  position: absolute;
-  bottom: 100px;
-  left: 112px;
-  width: 75px;
-  height: 75px;
-  background-color: #076;
+.dark-theme .conversational-form {
+  font-family: Helvetica Neue, Helvetica;
+  font-style: normal;
+  background-image: url(bgcontact.png) ;
+}
+.dark-theme .conversational-form cf-chat scrollable::-webkit-scrollbar {
+  width: 0px;
+}
+.dark-theme .conversational-form cf-chat-response {
+  padding-top: 0px;
+  min-width: 200px;
+}
+@media (min-width: var(--cf-breakpoint-1)) {
+  .dark-theme .conversational-form cf-chat-response {
+    max-width: 83%;
+  }
+}
+.dark-theme .conversational-form cf-chat-response text {
+  font-weight: var(--cf-font-weight-bold);
+  min-height: 42px;
+  font-size: 13px;
+}
+.dark-theme .conversational-form cf-chat-response thumb {
+  height: 42px;
+  width: 42px;
+}
+.dark-theme .conversational-form cf-chat-response thumb > p {
+  background-color: var(--cf-color-grey);
+}
+.dark-theme .conversational-form cf-chat-response:not(:last-of-type) {
+  margin-bottom: 10px;
+}
+.dark-theme .conversational-form cf-chat-response.robot {
+  padding-left: 48px;
+}
+.dark-theme .conversational-form cf-chat-response.robot text {
+  color: var(--cf-color-black);
+}
+.dark-theme .conversational-form cf-chat-response.robot text > p {
+  border-radius: 4px 20px 20px 20px;
+  background: var(--cf-color-grey);
+}
+.dark-theme .conversational-form cf-chat-response.robot text > p:not(:only-child):first-child {
+  border-radius: 20px 20px 20px 4px;
+}
+.dark-theme .conversational-form cf-chat-response.robot text > p:not(:only-child):last-child {
+  border-radius: 4px 20px 20px 20px;
+}
+.dark-theme .conversational-form cf-chat-response.robot thumb {
+  background-color: var(--cf-color-grey);
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+}
+.dark-theme .conversational-form cf-chat-response.user {
+  padding-right: 48px;
+}
+.dark-theme .conversational-form cf-chat-response.user text {
+  color: var(--cf-color-white);
+}
+.dark-theme .conversational-form cf-chat-response.user text > p {
+  background: var(--cf-color-black);
+  border-radius: 20px 4px 20px 20px;
+}
+.dark-theme .conversational-form cf-chat-response.user thumb {
+  background-color: var(--cf-color-black);
+  background-size: 20px 16px;
+  background-repeat: no-repeat;
+  background-position: 11px 12px;
+}
+.dark-theme .conversational-form cf-input input, .dark-theme .conversational-form cf-input textarea {
+  border-radius: 40px;
+  min-height: 57px;
+  font-size: 14px;
+  padding: 19px 60px 19px 30px;
+  height: 56px;
+  color: var(--cf-color-black-alpha04);
+  font-weight: var(--cf-font-weight-bold);
+}
+@media only screen (min-width: var(--cf-breakpoint-1)) {
+  .dark-theme .conversational-form cf-input input, .dark-theme .conversational-form cf-input textarea {
+    font-size: 16px;
+  }
+}
+.dark-theme .conversational-form cf-input input:not(:focus), .dark-theme .conversational-form cf-input textarea:not(:focus) {
+  box-shadow: 0 0 1px rgba(58, 58, 58, 0.5);
+}
+.dark-theme .conversational-form cf-input-button {
+  background: var(--cf-color-black);
+  height: 42px;
+  width: 42px;
+  border: none;
+}
+.dark-theme .conversational-form cf-input-button.microphone-interface {
+  background: var(--cf-color-white);
+}
+.dark-theme .conversational-form cf-input-button .cf-icon-progress {
+  background-image: url("data:image/svg+xml;charset=utf-8;base64,PHN2ZyB3aWR0aD0iMThweCIgaGVpZ2h0PSIxOXB4IiB2aWV3Qm94PSIwIDAgMTggMTkiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8ZyBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTM3Mi4wMDAwMDAsIC05NDUuMDAwMDAwKSIgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjIiPgogICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NTEuMDAwMDAwLCA5MjcuMDAwMDAwKSI+CiAgICAgICAgICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2MjIuMDAwMDAwLCAxOS4wMDAwMDApIj4KICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNOC4xNDAzNTA4OCwyLjEwOTE4MTE0IEw4LjE0MDM1MDg4LDE2LjA4MDkzODUiIGlkPSJMaW5lIiBzdHJva2UtbGluZWNhcD0ic3F1YXJlIj48L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgPHBvbHlsaW5lIGlkPSJSZWN0YW5nbGUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcuOTkzODAzLCA4LjA2ODc0NSkgcm90YXRlKC0zMTUuMDAwMDAwKSB0cmFuc2xhdGUoLTcuOTkzODAzLCAtOC4wNjg3NDUpICIgcG9pbnRzPSIyLjYyNTkxMzI4IDEzLjQ4Njk1OCAyLjYyNTkxMzI4IDIuNjUwNTMxMjEgMi42MjU5MTMyOCAyLjY1MDUzMTIxIDEzLjM2MTY5MjEgMi42NTA1MzEyMSI+PC9wb2x5bGluZT4KICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+");
+  background-size: 18px 19px;
+}
+.dark-theme .conversational-form cf-input-button.loading:after {
+  cf-border: x solid var(--cf-color-green);
+}
+.dark-theme .conversational-form cf-input-button .cf-icon-audio {
+  background-image: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAmCAYAAAGpAGuzAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAtlJREFUeNpiUFJSYgDh////M7AwQMB/ZWVlBiYGJADiqACx/N27dxlByu7AZAACiAFqwCeQATA9vDA9KAb8BzGARv8HcRhBHJBpAAHECDIAZjGMAZJA0Y9u1mcg5kEWhJnLC5UEgf1QehFOOwACCFniKBBPBwouQXb8NiC2AuLFyJaDgCc2V+F0Lk4JkGsuYvMHCBhA6QNAQT8QgwUacCBd94DYAYRhUcKAJMkFFPyObDnM199g9gAEELLPMYIGCpYDTYnC5Y1/WHwUic/fjAwEABMDiYBkDaBg2gXErkCcCQom5BCBJQtYLCCH0h8gZgbiJ0Asi6YBFEvnoWxtFiSbQOA2lmAFgQBg0G7EFg/YFIOTKowNEEDYIi4GiKcB8WUgtgYqxvA0MliGFFFWUBsZ8QVrJLp1wNDZRmo8eJCqgZG+SWMQamBBSg64Ms9FYFzwQIu8L0zYkjIasIQmFxA4hqzBD1rEH0ASk4cWI9Oh/GxQ4tMCMq5CBQyB+AKaDY+BWAaI/wI1s4BsuAYqgqGS56F+2gd13n+oYlASZ0EOpXhQJkEy1RFU1UDZd5DzA3Ly3ggNKU6kfM2Inh+YsJR6yIXAf1jmJzviAAIMWxZFBvxAPAeIQ3DIrwHiFKCzP5JjgSe01iIGeAEt2U6qBa+BWIRIC94ALRAlNTOIkBDUIlTLbTTPzqMW0NWCrySY8xVfEXwLiFWRxDSB+AYQdwJxE5EWdEKrTQ0gdR1J/DbIBzPQFM+F0s1AbAvEH/AYDJKzBWayZjS9MDADlpPXAXEgksRbIDYB4gdIYupArAtlg5oSN6EFM8jlCkDmGSAWRlK/HigXhFxUFANxD5oLfkPbJlOhrSFkAArWbCDOAmJWNLkSoOG92MoiUAHfAcRlZCaaLiCuABr+n5jCjhVaXYYCsTMQs6HJ/wLivUC8GoiXAA39TU59gK/9B+snkV3h/CclbJArVrrmZAB+mc1ty+WBKAAAAABJRU5ErkJggg==");
+  background-size: 12px 19px;
+  mix-blend-mode: difference;
+}
+.dark-theme .conversational-form cf-input-button cf-icon-audio-eq {
+  border-color: var(--cf-color-black);
+}
+.dark-theme .conversational-form .cf-button {
+  color: var(--cf-color-black);
+  border-color: #ddd;
+  transition: opacity var(--cf-anim-time) var(--anim-easeOut), border-color var(--cf-anim-time) var(--anim-easeOut), color var(--cf-anim-time) var(--anim-easeOut);
+  background: none !important;
+  font-weight: var(--cf-font-weight-bold);
+  line-height: 1.2;
+}
+.dark-theme .conversational-form .cf-button > div {
+  padding: 14px 24px;
+}
+.dark-theme .conversational-form .cf-button cf-radio {
+  background: var(--cf-color-black-alpha02);
+}
+.dark-theme .conversational-form .cf-button.highlight, .dark-theme .conversational-form .cf-button:focus, .dark-theme .conversational-form .cf-button:hover, .dark-theme .conversational-form .cf-button[checked="checked"], .dark-theme .conversational-form .cf-button.selected {
+  border-color: #5e5e5e;
+  color: var(--cf-color-black-alpha02);
+}
+.dark-theme .conversational-form .cf-button.highlight cf-radio, .dark-theme .conversational-form .cf-button.highlight cf-radio, .dark-theme .conversational-form .cf-button.highlight cf-radio, .dark-theme .conversational-form .cf-button:focus cf-radio, .dark-theme .conversational-form .cf-button:focus cf-radio, .dark-theme .conversational-form .cf-button:focus cf-radio, .dark-theme .conversational-form .cf-button:hover cf-radio, .dark-theme .conversational-form .cf-button:hover cf-radio, .dark-theme .conversational-form .cf-button:hover cf-radio, .dark-theme .conversational-form .cf-button[checked="checked"] cf-radio, .dark-theme .conversational-form .cf-button[checked="checked"] cf-radio, .dark-theme .conversational-form .cf-button[checked="checked"] cf-radio, .dark-theme .conversational-form .cf-button.selected cf-radio, .dark-theme .conversational-form .cf-button.selected cf-radio, .dark-theme .conversational-form .cf-button.selected cf-radio {
+  background: var(--cf-color-black);
+}
+.dark-theme .conversational-form cf-list-button:after {
+  background-image: none;
+  background: black;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  box-shadow: inset 10px 10px 25px #000;
 }
-.key {
-  margin-top: 20px;
-  width: 12px;
-  height: 100px;
-  border-radius: 5px;
-  background-color: #f25c5c;
-  /*background-color: #f4667c;*/
-  box-shadow: 5px 5px 20px #000;
-  z-index: 10;
+#cf-context {
+  width: 100vw;
+  height: 100vh;
 }
-.key:first-child {
-  margin-left: 15px;
-}
-.key.last-key {
-  margin-right: 15px;
-}
-.key-1 {
-  height: 200px;
-}
-.key-2 {
-  height: 190px;
-}
-.key-3 {
-  height: 180px;
-}
-.key-4 {
-  height: 170px;
-}
-.key-5 {
-  height: 160px;
-}
-.key-6 {
-  height: 150px;
-}
-.key-7 {
-  height: 140px;
-}
-.key-8 {
-  height: 130px;
-}
-.key-9 {
-  height: 120px;
-}
-.key-10 {
-  height: 110px;
-}
-.key-11 {
-  height: 100px;
-}
-
-.pad {
-  position: absolute;  
-  width: 280px;
-  background-color: #19564c;
-}
-.top-pad {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  top: 50px;
-  border-radius: 7px;
-  height: 30px;
-  box-shadow:
-    5px 5px 25px #000,
-    inset 5px 5px 25px rgba(255, 255, 255, 0.5),
-    inset -5px -5px 25px rgba(0, 0, 0, 0.5);
-  z-index: 20;
-}
-.bottom-pad {
-  top: 30px;
-  height: 15px;
-  border-radius: 5px;
-  box-shadow:
-    2px 2px 5px #000,
-    inset 5px 5px 15px rgba(255, 255, 255, 0.3),
-    inset -5px -5px 15px rgba(0, 0, 0, 0.3);
-}
-.bottom-pad.last-pad {
-  top: 90px;
-}
-.screw {
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: silver;
-    box-shadow:
-    2px 2px 3px #000,
-    inset 2px 2px 2px rgba(255, 255, 255, 0.3),
-    inset -2px -2px 2px rgba(0, 0, 0, 0.3);
-}
-.screw:first-child {
-  margin-left: -30px;
-}
-.screw:last-child {
-  margin-right: -30px;
-}
-
-@keyframes shine {
-  0% {
-    background-color: rgba(255, 232, 107, 1);
-  }
-  /*
-  15% {
-    box-shadow:
-      0 0 25px 5px rgba(255, 232, 107, 1),
-      5px 5px 20px #000;
-  }
-  100% {
-    box-shadow:
-      0 0 50px 15px rgba(255, 255, 0, 0),
-      5px 5px 20px #000;
-  }
-  */
-}
-
-.key:hover {
-  animation: shine 1s;
-  
-}
-.back-button {
-  width: 50px;
-  height: 50px;
-  position: absolute;
-  top: 50px;
-  left: 50px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: #03a9f4 1px solid;
+#form {
+  height: 0px;
   overflow: hidden;
-  transition: background 0.3s ease;
 }
-.back-button.back .arrow-wrap {
-  left: -50%;
-}
-.back-button:hover {
-  background: #03a9f4;
-}
-.back-button:hover .arrow-wrap span {
-  background: #fff;
-}
-.back-button .arrow-wrap {
-  display: block;
-  position: absolute;
-  height: 70%;
-  width: 70%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: left 0.3s ease;
-}
-.back-button .arrow-wrap span {
-  height: 1px;
-  left: 0;
-  top: 50%;
-  background: #03a9f4;
-  position: absolute;
-  display: block;
-  transition: background 0.3s ease;
-}
-.back-button .arrow-wrap .arrow-part-1 {
-  width: 100%;
-  transform: translate(0, -50%);
-}
-.back-button .arrow-wrap .arrow-part-2 {
-  width: 60%;
-  transform: rotate(-45deg);
-  transform-origin: 0 0;
-}
-.back-button .arrow-wrap .arrow-part-3 {
-  width: 60%;
-  transform: rotate(45deg);
-  transform-origin: 0 0;
-}
-
-/*...............form...........*/
-// Grid
-body {
-  background: #efefef;
-  font-size: 62.5%;
-  font-family: 'Lato', sans-serif;
-  font-weight: ;
-  color: #b6b6b6;
-}
-body section {
-  background: white;
-  margin: 60px auto 120px;
-  border-top: 15px solid #313a3d;
-  text-align: center;
-  padding: 50px 0 110px;
-  width: 80%;
-  max-width: 600px;
-  position: absolute;
-  left: 50%;
-}
-body section h1 {
-  margin-bottom: 40px;
-  font-size: 40px;
-  text-transform: uppercase;
-  font-family: 'Lato', sans-serif;
-  font-weight: 100;
-}
-form {
-  width: 58.33333%;
-  margin: 0 auto;
-}
-form .field {
-  width: 100%;
-  position: relative;
-  margin-bottom: 15px;
-}
-form .field label {
-  text-transform: uppercase;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #313a3d;
-  width: 100%;
-  padding: 18px 0;
-  font-size: 16px;
-  letter-spacing: 0.075em;
-  -webkit-transition: all 333ms ease-in-out;
-  -moz-transition: all 333ms ease-in-out;
-  -o-transition: all 333ms ease-in-out;
-  -ms-transition: all 333ms ease-in-out;
-  transition: all 333ms ease-in-out;
-}
-form .field label + span {
-  font-family: 'SSStandard';
-  opacity: 0;
-  color: white;
-  display: block;
-  position: absolute;
-  top: 12px;
-  left: 7%;
-  font-size: 2.5em;
-  text-shadow: 1px 2px 0 #cd6302;
-  -webkit-transition: all 333ms ease-in-out;
-  -moz-transition: all 333ms ease-in-out;
-  -o-transition: all 333ms ease-in-out;
-  -ms-transition: all 333ms ease-in-out;
-  transition: all 333ms ease-in-out;
-}
-form .field input[type="text"], form .field textarea {
-  border: none;
-  background: #e8e9ea;
-  width: 80.5%;
-  margin: 0;
-  padding: 18px 0;
-  padding-left: 19.5%;
-  color: #313a3d;
-  font-size: 1.4em;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-form .field input[type="text"]#msg, form .field textarea#msg {
-  height: 18px;
-  resize: none;
-  -webkit-transition: all 333ms ease-in-out;
-  -moz-transition: all 333ms ease-in-out;
-  -o-transition: all 333ms ease-in-out;
-  -ms-transition: all 333ms ease-in-out;
-  transition: all 333ms ease-in-out;
-}
-form .field input[type="text"]:focus, form .field textarea:focus, form .field input[type="text"].focused, form .field textarea.focused {
-  outline: none;
-}
-form .field input[type="text"]:focus#msg, form .field textarea:focus#msg, form .field input[type="text"].focused#msg, form .field textarea.focused#msg {
-  padding-bottom: 150px;
-}
-form .field input[type="text"]:focus + label, form .field textarea:focus + label, form .field input[type="text"].focused + label, form .field textarea.focused + label {
-  width: 18%;
-  background: #fd9638;
-  color: #313a3d;
-}
-form .field input[type="text"].focused + label, form .field textarea.focused + label {
-  color: #fd9638;
-}
-form .field:hover label {
-  width: 18%;
-  background: #313a3d;
-  color: white;
-}
-form input[type="submit"] {
-  background: #fd9638;
-  color: white;
-  -webkit-appearance: none;
-  border: none;
-  text-transform: uppercase;
-  position: relative;
-  padding: 13px 50px;
-  font-size: 1.4em;
-  letter-spacing: 0.1em;
-  font-family: 'Lato', sans-serif;
-  font-weight: 300;
-  -webkit-transition: all 333ms ease-in-out;
-  -moz-transition: all 333ms ease-in-out;
-  -o-transition: all 333ms ease-in-out;
-  -ms-transition: all 333ms ease-in-out;
-  transition: all 333ms ease-in-out;
-}
-form input[type="submit"]:hover {
-  background: #313a3d;
-  color: #fd9638;
-}
-form input[type="submit"]:focus {
-  outline: none;
-  background: #cd6302;
-}
-
 </style>
 </head>
 <body>
-	<a href="index.html">
-<div class="back-button" style="z-index: 5">
-  <div class="arrow-wrap">
-    <span class="arrow-part-1"></span>
-    <span class="arrow-part-2"></span>
-    <span class="arrow-part-3"></span>
-  </div>
-</div>
-</a>
-<div id="kalimba">
-  <div class="key key-10" data-note="E5"></div>
-  <div class="key key-8" data-note="C5"></div>
-  <div class="key key-6" data-note="A4"></div>
-  <div class="key key-4" data-note="F4"></div>
-  <div class="key key-2" data-note="D4"></div>
-  <div class="key key-1" data-note="C4"></div>
-  <div class="key key-3" data-note="E4"></div>
-  <div class="key key-5" data-note="G4"></div>
-  <div class="key key-7" data-note="B4"></div>
-  <div class="key key-9" data-note="D5"></div>
-  <div class="key last-key key-11" data-note="F5"></div>
-  <div class="pad bottom-pad"></div>
-  <div class="pad top-pad">
-    <div class="screw"></div>
-    <div class="screw"></div>
-  </div>
-  <div class="pad bottom-pad last-pad"></div>
-  <div id="hole"></div>
-</div>
-	<section id="hire">
-    <h1>Contact Me</h1>
+<form id="form">
+  <fieldset>
+    <label for="name">What's your name?</label>
+    <input required cf-questions="Hi there! What's your name? " type="text" class="form-control" name="name" id="name" />
+  </fieldset>
     
-    <form>
-	      <div class="field name-box">
-		        <input type="text" id="name" placeholder="Who Are You?"/>
-        		<label for="name">Name</label>
-		        <span class="ss-icon">check</span>
-	      </div>
+    <fieldset>
+    <label for="opinion">Let us get in touch.</label>
+    <select cf-questions="Great to meet you, {previous-answer}! I'm Atulya's personal assistant!Please select your query." name="opinion" id="opinion" class="form-control">
+      <option></option>
+      <option>Enquiry</option>
+      <option>Feedback</option>
+      <option>Great Job!</option>
+    </select>
+  </fieldset>
 
-	      <div class="field email-box">
-		        <input type="text" id="email" placeholder="name@email.com"/>
-		        <label for="email">Email</label>
-		        <span class="ss-icon">check</span>
-	      </div>
+    <fieldset>
+    <label for="company">Type in your message!</label>
+    <input required cf-questions="Type in your message!" type="text" class="form-control" name="message" id="company">
+  </fieldset>
+  
+    <fieldset>
+    <label for="email">Email</label>
+    <input pattern=".+\@.+\..+" cf-error="E-mail not correct" cf-questions="Please give me your email id." type="email" class="form-control" name="email" id="your-email">
+  </fieldset>
+  
 
-	      <div class="field msg-box">
-		        <textarea id="msg" rows="4" placeholder="Your message goes here..."/></textarea>
-		        <label for="msg">Msg</label>
-		        <span class="ss-icon">check</span>
-	      </div>
+  <fieldset style="display: none;">
+    <label for="thats-all">Are you ready to submit the message?</label>
+    <select cf-questions="Are you ready to submit the message?" name="submit-form" id="submit-form" class="form-control">
+      <option></option>
+      <option>Yup</option>
+    </select>
+  </fieldset>
+  <fieldset style="display: none;">
+    <label for="thats-all">Thanks for your valuable time.</label>
+    <select cf-questions="Are you ready to submit the message?" name="submit-form" id="submit-form" class="form-control">
+      <option></option>
+      <option>Yup</option>
+    </select>
+  </fieldset>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>
+<div id="cf-context" class="dark-theme" role="cf-context" cf-context></div>
 
-	      <input class="button" type="submit" value="Send" />
-  </form>
-</section>
-<script type="text/javascript">
-	var backButton = document.querySelector('.back-button')
+<script src="https://www.gstatic.com/firebasejs/5.8.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDH6hBV1wX7Z3Ow2zfyMYun6c-NKXIB_XQ",
+    authDomain: "feedback-212d4.firebaseapp.com",
+    databaseURL: "https://feedback-212d4.firebaseio.com",
+    projectId: "feedback-212d4",
+    storageBucket: "feedback-212d4.appspot.com",
+    messagingSenderId: "946747767483"
+  };
+  firebase.initializeApp(config);
+ var db = firebase.database();
+var conversationalForm = window.cf.ConversationalForm.startTheConversation({
+  formEl: document.getElementById("form"),
+  context: document.getElementById("cf-context"),
+  
+  //userImage: "https://cdn2.iconfinder.com/data/icons/users-22/64/_User_Man_Circle-512.png",
+  robotImage: "",
 
-function backAnim(){  
-  if (backButton.classList.contains('back')){
-    backButton.classList.remove('back');
+  submitCallback: function() {
+    var formData = conversationalForm.getFormData();
+    var formDataSerialized = conversationalForm.getFormData(true);
+    var connectedRef = db.ref(".info/connected");
+            connectedRef.on("value", function(snap) {
+  if (snap.val() === false) {
+    conversationalForm.addRobotChatResponse("Please check your internet connection");
   }
-  else{
-    backButton.classList.add('back');
-    setTimeout(backAnim, 1000);  
-  }
+   else{
+     const form_data = {
+       name: formDataSerialized.name,
+       snum: formDataSerialized.snum,
+       message: formDataSerialized.opinion[0],
+       college: formDataSerialized.company
+     }
+     db.ref('users/').push(form_data);   
+     console.log("Formdata, serialized:", form_data);
+    conversationalForm.addRobotChatResponse("I have received your message.Thanks");
+       }  
+  });    
 }
-backButton.addEventListener('click', backAnim); 
-
- 
-</script>
-
-<script type="text/javascript">
-	/* Initial attempt to use physical modelling. Just scroll down. */
-
-// const NOISE_FACTOR = 0.05;
-// const BUFFER_SIZE = 2048;
-
-// const wave = new Array(64).fill(0).map((x, i) => 1 - Math.max(i/40, 1));
-// const sp = new Array(64).fill(0);
-// //sp[0] = -0.5;
-
-// const genSound = function() {
-//   /*
-//   const newSample = (wave[0]*0.9 + wave[1]*0.1)/1.0100;
-//   wave.shift();
-//   wave.push(newSample);
-//   */
-  
-  
-//   for (let i = 0, l=sp.length; i<l; i++) {
-//     sp[i] = ((wave[i-1]||wave[i]) + (wave[i+1]||0) - 2*wave[i]) * 0.8 + sp[i]*0.99995;
-//   }
-//   sp[sp.length-1] *= 0.9;
-  
-//   sp[42] += (0 - wave[42]) * 0.5;
-//   sp[41] += (0 - wave[41]) * 0.5;
-//   sp[40] += (0 - wave[40]) * 0.5;
-  
-//   for (let i = 0, l=wave.length; i<l; i++) {
-//     wave[i] = sp[i]*1 + wave[i];  
-//   }
-//   if (Math.random() < 0.0001) console.log(wave[0]);
-//     return [
-//       wave[0],
-//       wave[0]
-//     ];
-// };
-
-// const actx = new AudioContext();
-
-
-//   var source = actx.createBufferSource();
-  
-//   // Hook it up to a ScriptProcessorNode.
-//   var processor = actx.createScriptProcessor(BUFFER_SIZE);
-//   processor.onaudioprocess = function(e) {
-//   var leftIn = e.inputBuffer.getChannelData(0);
-//   var rightIn = e.inputBuffer.getChannelData(1);
-//   var leftOut = e.outputBuffer.getChannelData(0);
-//   var rightOut = e.outputBuffer.getChannelData(1);
-
-//   for (var i = 0; i < leftIn.length; i++) {
-//     //genSound();
-//     [leftOut[i], rightOut[i]] = genSound();
-//   }
-// };
-
-
-// source.connect(processor);
-// processor.connect(actx.destination);
-
-//   source[source.start ? 'start': 'noteOn'](0);
-
-// kalimba preset from https://www.guitarland.com/MusicTheoryWithToneJS/Presets-gh-pages/ with sustain removed
-const synth = new Tone.PolySynth(11, Tone.FMSynth, {
-    "harmonicity":8,
-    "modulationIndex": 2,
-    "oscillator" : {
-        "type": "sine"
-    },
-    "envelope": {
-        "attack": 0.001,
-        "decay": 2,
-        "sustain": 0,
-        "release": 2
-    },
-    "modulation" : {
-        "type" : "square"
-    },
-    "modulationEnvelope" : {
-        "attack": 0.002,
-        "decay": 0.2,
-        "sustain": 0,
-        "release": 0.2
-    }
-}).toMaster();
-
-//attach a listener to all of the buttons
-document.querySelectorAll('.key').forEach((key) => {
-	key.addEventListener('mouseover', function(e){
-		//play the note on mouse over
-		synth.triggerAttack(e.target.dataset.note);
-	});
-	key.addEventListener('mouseleave', function(e){
-		//release on mouseleave
-		synth.triggerRelease(e.target.dataset.note);
-	});
-})
-</script>
-<script type="text/javascript">
-	// Input Lock
-$('textarea').blur(function () {
-    $('#hire textarea').each(function () {
-        $this = $(this);
-        if ( this.value != '' ) {
-          $this.addClass('focused');
-          $('textarea + label + span').css({'opacity': 1});
-        }
-        else {
-          $this.removeClass('focused');
-          $('textarea + label + span').css({'opacity': 0});
-        }
-    });
 });
 
-$('#hire .field:first-child input').blur(function () {
-    $('#hire .field:first-child input').each(function () {
-        $this = $(this);
-        if ( this.value != '' ) {
-          $this.addClass('focused');
-          $('.field:first-child input + label + span').css({'opacity': 1});
-        }
-        else {
-          $this.removeClass('focused');
-          $('.field:first-child input + label + span').css({'opacity': 0});
-        }
-    });
-});
-
-$('#hire .field:nth-child(2) input').blur(function () {
-    $('#hire .field:nth-child(2) input').each(function () {
-        $this = $(this);
-        if ( this.value != '' ) {
-          $this.addClass('focused');
-          $('.field:nth-child(2) input + label + span').css({'opacity': 1});
-        }
-        else {
-          $this.removeClass('focused');
-          $('.field:nth-child(2) input + label + span').css({'opacity': 0});
-        }
-    });
-});
 </script>
 </body>
 </html>
